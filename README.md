@@ -1,5 +1,5 @@
-<div align="center">
 ## Rice preview
+<div align="center">
 <details>
   <summary>Click to view rice</summary>
   
