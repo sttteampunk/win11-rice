@@ -1,3 +1,5 @@
+<div align="center">
+
 ![Setup Preview 1](assets/1.jpg)
 ![Setup Preview 2](assets/2.jpg)
 ![Setup Preview 3](assets/3.jpg)
@@ -12,6 +14,8 @@
 ![Shell](https://img.shields.io/badge/shell-PowerShell%207-5391FE?style=flat-square&logo=powershell)
 ![RAM](https://img.shields.io/badge/idle%20RAM-~200--300MB-brightgreen?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-orange?style=flat-square)
+
+</div>
 
 > _A guide to installing and configuring a full Windows ricing stack — from terminal emulator to system-level UI mods._
 
