@@ -1,5 +1,11 @@
 <div align="center">
 
+<details>
+  <summary>Click to view the Neovim Setup</summary>
+  
+  ![Setup Preview 1](assets/1.jpg)
+
+</details>
 ![Setup Preview 1](assets/1.jpg)
 ![Setup Preview 2](assets/2.jpg)
 ![Setup Preview 3](assets/3.jpg)
