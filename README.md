@@ -1,20 +1,18 @@
 <div align="center">
-
+## Rice preview
 <details>
-  <summary>Click to view the Neovim Setup</summary>
+  <summary>Click to view rice</summary>
   
   ![Setup Preview 1](assets/1.jpg)
-
+  ![Setup Preview 2](assets/2.jpg)
+  ![Setup Preview 3](assets/3.jpg)
+  ![Setup Preview 4](assets/4.jpg)
+  ![Setup Preview 5](assets/5.jpg)
+  ![Setup Preview 6](assets/6.jpg)
+  ![Setup Preview 7](assets/7.jpg)
+  ![Setup Preview 8](assets/8.jpg)
+  ![Setup Preview 9](assets/9.jpg)
 </details>
-![Setup Preview 1](assets/1.jpg)
-![Setup Preview 2](assets/2.jpg)
-![Setup Preview 3](assets/3.jpg)
-![Setup Preview 4](assets/4.jpg)
-![Setup Preview 5](assets/5.jpg)
-![Setup Preview 6](assets/6.jpg)
-![Setup Preview 7](assets/7.jpg)
-![Setup Preview 8](assets/8.jpg)
-![Setup Preview 9](assets/9.jpg)
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2011-blue?style=flat-square&logo=windows)
 ![Shell](https://img.shields.io/badge/shell-PowerShell%207-5391FE?style=flat-square&logo=powershell)
@@ -279,3 +277,4 @@ From here, the setup is yours. Customize configs, swap themes, explore the tools
 
 - **Darren Lingter's guide** (highly recommended starting point) → [YouTube](https://www.youtube.com/watch?v=9RJre4byy2g&t=282s)
 - **MonochromeV2 dotfiles** (baseline for this repo's dotfiles) → [GitHub](https://github.com/MrDLingters/Win11MonochromeV2)
+- **Nyte Tyde's art**(Original art for some of wallpapers) [X](https://x.com/Nyte_Tyde)
