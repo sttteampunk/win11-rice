@@ -10,18 +10,29 @@ $global:DryRun = $false
 # --- SYMLINK MAPPING (The Brains of the Operation) ---
 # Format: Name, App (for detection), Target (where it lives in Windows), Source (folder in your dotfiles repo)
 $global:SymlinkMap = @(
-    @{ Name="Komorebi";        App="komorebic";     InstallCheck=$null;                                                           Target="$HOME\komorebi.json";                                         Source="komorebi\komorebi.json" }
-    @{ Name="Whkd";            App="whkd";           InstallCheck=$null;                                                           Target="$HOME\.config\whkdrc";                                        Source="komorebi\whkdrc" }
-    @{ Name="Fastfetch";       App="fastfetch";      InstallCheck=$null;                                                           Target="$HOME\.config\fastfetch";                                     Source="fastfetch" }
-    @{ Name="Starship";        App="starship";       InstallCheck=$null;                                                           Target="$HOME\.config\starship.toml";                                 Source="starship\starship.toml" }
-    @{ Name="WezTerm";         App="wezterm-gui";    InstallCheck=$null;                                                           Target="$HOME\.config\wezterm";                                       Source="wezterm" }
-    @{ Name="Yasb";            App="yasb";           InstallCheck=$null;                                                           Target="$HOME\.config\yasb";                                          Source="yasb" }
-    @{ Name="Neovim";          App="nvim";           InstallCheck=$null;                                                           Target="$env:LOCALAPPDATA\nvim";                                      Source="nvim" }
-    @{ Name="Yazi";            App="yazi";           InstallCheck=$null;                                                           Target="$env:APPDATA\yazi\config";                                    Source="yazi" }
-    @{ Name="FlowLauncher";    App="Flow.Launcher";  InstallCheck="$env:LOCALAPPDATA\FlowLauncher\Flow.Launcher.exe";              Target="$env:APPDATA\FlowLauncher\Themes";                            Source="flowlauncher" }
-    @{ Name="Spicetify Themes";App="spicetify";      InstallCheck=$null;                                                           Target="$env:APPDATA\spicetify\Themes\TUI";                           Source="spicetify\Themes\TUI" }
-    @{ Name="PowerShell";      App="pwsh";           InstallCheck=$null;                                                           Target="$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"; Source="powershell\Microsoft.PowerShell_profile.ps1" }
-    @{ Name="Nilesoft Shell";  App="shell";          InstallCheck="C:\Program Files\Nilesoft Shell\shell.exe";                    Target="C:\Program Files\Nilesoft Shell\imports\theme.nss";           Source="nilesoft\theme.nss" }
+    # --- Komorebi (all files grouped) ---
+    @{ Name="Komorebi Config";         App="komorebic";     InstallCheck=$null;                                                Target="$HOME\komorebi.json";                                              Source="komorebi\komorebi.json";                              Type="File"      }
+    @{ Name="Komorebi Applications";   App="komorebic";     InstallCheck=$null;                                                Target="$HOME\applications.json";                                 Source="komorebi\applications.json";                          Type="File"      }
+    @{ Name="Whkd";                    App="whkd";           InstallCheck=$null;                                                Target="$HOME\.config\whkdrc";                                             Source="komorebi\whkdrc";                                     Type="File"      }
+    # --- Terminal & shell ---
+    @{ Name="WezTerm";                 App="wezterm-gui";    InstallCheck=$null;                                                Target="$HOME\.config\wezterm";                                            Source="wezterm";                                             Type="Directory" }
+    @{ Name="Fastfetch";               App="fastfetch";      InstallCheck=$null;                                                Target="$HOME\.config\fastfetch";                                          Source="fastfetch";                                           Type="Directory" }
+    @{ Name="Starship";                App="starship";       InstallCheck=$null;                                                Target="$HOME\.config\starship.toml";                                      Source="starship\starship.toml";                              Type="File"      }
+    @{ Name="PowerShell";              App="pwsh";           InstallCheck=$null;                                                Target="$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1";     Source="powershell\Microsoft.PowerShell_profile.ps1";         Type="File"      }
+    # --- Editors & file managers ---
+    @{ Name="Neovim";                  App="nvim";           InstallCheck=$null;                                                Target="$env:LOCALAPPDATA\nvim";                                           Source="nvim";                                                Type="Directory" }
+    @{ Name="Yazi";                    App="yazi";           InstallCheck=$null;                                                Target="$env:APPDATA\yazi\config";                                         Source="yazi";                                                Type="Directory" }
+    # --- Status bar ---
+    @{ Name="Yasb";                    App="yasb";           InstallCheck=$null;                                                Target="$HOME\.config\yasb";                                               Source="yasb";                                                Type="Directory" }
+    # --- App launcher ---
+    @{ Name="FlowLauncher";            App="Flow.Launcher";  InstallCheck="$env:LOCALAPPDATA\FlowLauncher\Flow.Launcher.exe";  Target="$env:APPDATA\FlowLauncher\Themes";                                 Source="flowlauncher";                                        Type="Directory" }
+    # --- Spicetify (themes + extensions grouped) ---
+    @{ Name="Spicetify Themes";        App="spicetify";      InstallCheck=$null;                                                Target="$env:APPDATA\spicetify\Themes\TUI";                                Source="spicetify\Themes\TUI";                                Type="Directory" }
+    @{ Name="Spicetify Extensions";    App="spicetify";      InstallCheck=$null;                                                Target="$env:APPDATA\spicetify\Extensions";                                Source="spicetify\Extensions";                                Type="Directory" }
+    # --- Vencord ---
+    @{ Name="Vencord Themes";          App="vesktop";        InstallCheck="$env:APPDATA\Vencord\themes";                       Target="$env:APPDATA\Vencord\themes";                                      Source="vencord\themes";                                      Type="Directory" }
+    # --- System mods ---
+    @{ Name="Nilesoft Shell";          App="shell";          InstallCheck="C:\Program Files\Nilesoft Shell\shell.exe";         Target="C:\Program Files\Nilesoft Shell\imports\theme.nss";                Source="nilesoft\theme.nss";                                  Type="File"      }
 )
 
 # =====================================================================
@@ -221,16 +232,22 @@ function Deploy-Symlinks {
 
     $modeLabel = if ($global:DryRun) { " [DRY RUN — no changes will be made]" } else { "" }
     Write-Host "`n  --- SYMLINK DEPLOYMENT$modeLabel ---`n" -ForegroundColor $(if ($global:DryRun) { 'Magenta' } else { 'Cyan' })
+    Write-Host "  How this works:" -ForegroundColor DarkGray
+    Write-Host "    1. If app already has a config  -> moves it into your Dotfiles folder" -ForegroundColor DarkGray
+    Write-Host "    2. If app has no config yet     -> creates an empty placeholder file/folder" -ForegroundColor DarkGray
+    Write-Host "    3. Creates a symlink from the original path back to Dotfiles" -ForegroundColor DarkGray
+    Write-Host "    After deploy: edit files in Dotfiles, or replace with files from this repo." -ForegroundColor DarkGray
+    Write-Host ""
 
     $userInput = Read-Host "  Enter dotfiles directory path (Enter for default: $global:DefaultDotfilesDir)"
-
     $dotfilesDir = if ([string]::IsNullOrWhiteSpace($userInput)) { $global:DefaultDotfilesDir } else { $userInput }
 
     Write-Host ""
     Write-Host "  Dotfiles directory : " -NoNewline; Write-Host $dotfilesDir -ForegroundColor Yellow
-    Write-Host "  Apps to link       : " -NoNewline; Write-Host $global:DetectedApps.Count -ForegroundColor Yellow
+    Write-Host "  Apps to process    : " -NoNewline; Write-Host $global:DetectedApps.Count -ForegroundColor Yellow
     if ($global:DryRun) {
-        Write-Host "  Mode               : " -NoNewline; Write-Host "DRY RUN (no files will be created, moved, or deleted)" -ForegroundColor Magenta
+        Write-Host "  Mode               : " -NoNewline
+        Write-Host "DRY RUN (no files will be created, moved, or deleted)" -ForegroundColor Magenta
     }
     Write-Host ""
 
@@ -241,7 +258,7 @@ function Deploy-Symlinks {
         return
     }
 
-    # Create root dotfiles directory if missing (skipped in dry-run)
+    # Create root dotfiles directory if missing
     if (-not (Test-Path $dotfilesDir)) {
         if ($global:DryRun) {
             Write-Host "`n  [DRY RUN] Would create dotfiles directory: $dotfilesDir" -ForegroundColor Magenta
@@ -251,78 +268,105 @@ function Deploy-Symlinks {
         }
     }
 
-    # --- Counters for deploy summary ---
-    $countLinked  = 0
-    $countSkipped = 0
-    $countBacked  = 0
-    $countFailed  = 0
-
     Write-Host ""
+
+    # --- Counters ---
+    $countMoved       = 0
+    $countPlaceholder = 0
+    $countLinked      = 0
+    $countSkipped     = 0
+    $countFailed      = 0
 
     foreach ($item in $global:SymlinkMap) {
         if ($global:DetectedApps -notcontains $item.Name) { continue }
 
-        $sourcePath = Join-Path -Path $dotfilesDir -ChildPath $item.Source
-        $targetPath = $item.Target
-
-        # Check source exists in dotfiles before attempting to link
-        if (-not (Test-Path $sourcePath)) {
-            Write-Host "  [SKIP]   $($item.Name)  (source not found: $sourcePath)" -ForegroundColor DarkGray
-            $countSkipped++
-            continue
-        }
-
-        # Ensure parent directory of target exists
-        $targetParent = Split-Path $targetPath
-        if ($targetParent -and -not (Test-Path $targetParent)) {
-            if ($global:DryRun) {
-                Write-Host "  [DRY RUN] Would create parent directory: $targetParent" -ForegroundColor Magenta
-            } else {
-                New-Item -ItemType Directory -Path $targetParent -Force | Out-Null
-            }
-        }
+        $sourcePath  = Join-Path -Path $dotfilesDir -ChildPath $item.Source
+        $targetPath  = $item.Target
+        $sourceParent = Split-Path $sourcePath
 
         if ($global:DryRun) {
-            # --- Dry-run: describe what would happen ---
+            # ---- DRY RUN PREVIEW ----
             if (Test-Path $targetPath) {
                 $existing = Get-Item $targetPath -ErrorAction SilentlyContinue
                 if ($existing.LinkType -eq 'SymbolicLink') {
-                    Write-Host "  [DRY RUN] Would re-link  : $($item.Name)  (existing symlink replaced)" -ForegroundColor Magenta
+                    Write-Host "  [DRY RUN] Already linked  : $($item.Name) — would skip" -ForegroundColor Magenta
+                    $countSkipped++
+                } elseif (Test-Path $sourcePath) {
+                    Write-Host "  [DRY RUN] Source conflict  : $($item.Name) — source already exists in Dotfiles, would skip move" -ForegroundColor DarkYellow
+                    Write-Host "            Would link       : $targetPath -> $sourcePath" -ForegroundColor Magenta
+                    $countLinked++
                 } else {
-                    $backupPath = Get-BackupPath -Path $targetPath
-                    Write-Host "  [DRY RUN] Would backup   : $($item.Name)  -> $backupPath" -ForegroundColor Magenta
-                    Write-Host "  [DRY RUN] Would link     : $($item.Name)  $targetPath -> $sourcePath" -ForegroundColor Magenta
-                    $countBacked++
+                    Write-Host "  [DRY RUN] Would move       : $($item.Name)  $targetPath -> $sourcePath" -ForegroundColor Magenta
+                    Write-Host "            Would link       : $targetPath -> $sourcePath" -ForegroundColor Magenta
+                    $countMoved++
+                    $countLinked++
                 }
             } else {
-                Write-Host "  [DRY RUN] Would link     : $($item.Name)  $targetPath -> $sourcePath" -ForegroundColor Magenta
+                if (Test-Path $sourcePath) {
+                    Write-Host "  [DRY RUN] Source exists    : $($item.Name) — would link directly" -ForegroundColor Magenta
+                } else {
+                    Write-Host "  [DRY RUN] Would create     : $($item.Name) empty $($item.Type.ToLower()) at $sourcePath" -ForegroundColor Magenta
+                    $countPlaceholder++
+                }
+                Write-Host "            Would link       : $targetPath -> $sourcePath" -ForegroundColor Magenta
+                $countLinked++
             }
-            $countLinked++
+            continue
+        }
 
-        } else {
-            # --- Live deploy ---
-            try {
-                if (Test-Path $targetPath) {
-                    $existing = Get-Item $targetPath -ErrorAction SilentlyContinue
+        # ---- LIVE DEPLOY ----
+        try {
+            # Ensure parent folder exists in dotfiles dir
+            if ($sourceParent -and -not (Test-Path $sourceParent)) {
+                New-Item -ItemType Directory -Path $sourceParent -Force | Out-Null
+            }
 
-                    if ($existing.LinkType -eq 'SymbolicLink') {
-                        Remove-Item $targetPath -Force -ErrorAction Stop
-                    } else {
-                        $backupPath = Get-BackupPath -Path $targetPath
-                        Rename-Item -Path $targetPath -NewName $backupPath -ErrorAction Stop
-                        Write-Host "  [BACKUP] $($item.Name)  -> $backupPath" -ForegroundColor DarkYellow
-                        $countBacked++
-                    }
+            # Ensure parent folder of target exists on system
+            $targetParent = Split-Path $targetPath
+            if ($targetParent -and -not (Test-Path $targetParent)) {
+                New-Item -ItemType Directory -Path $targetParent -Force | Out-Null
+            }
+
+            if (Test-Path $targetPath) {
+                $existing = Get-Item $targetPath -ErrorAction SilentlyContinue
+
+                if ($existing.LinkType -eq 'SymbolicLink') {
+                    # Already linked — skip, don't touch it
+                    Write-Host "  [SKIP]    $($item.Name)  (already a symlink)" -ForegroundColor DarkGray
+                    $countSkipped++
+                    continue
                 }
 
-                New-Item -ItemType SymbolicLink -Path $targetPath -Target $sourcePath -Force | Out-Null
-                Write-Host "  [LINKED] $($item.Name)  $targetPath -> $sourcePath" -ForegroundColor Green
-                $countLinked++
-
-            } catch {
-                Write-Host "  [FAILED] $($item.Name)  — $($_.Exception.Message)" -ForegroundColor Red
-                $countFailed++
+                # Real config exists — move it into dotfiles dir
+                if (Test-Path $sourcePath) {
+                    # Source already exists in dotfiles — don't overwrite, just link
+                    Write-Host "  [SKIP-MV] $($item.Name)  (source already in Dotfiles — skipping move, linking)" -ForegroundColor DarkYellow
+                } else {
+                    Move-Item -Path $targetPath -Destination $sourcePath -ErrorAction Stop
+                    Write-Host "  [MOVED]   $($item.Name)  $targetPath -> $sourcePath" -ForegroundColor Cyan
+                    $countMoved++
+                }
+            } else {
+                # Nothing at target path — create placeholder if source doesn't exist either
+                if (-not (Test-Path $sourcePath)) {
+                    if ($item.Type -eq 'Directory') {
+                        New-Item -ItemType Directory -Path $sourcePath -Force | Out-Null
+                    } else {
+                        New-Item -ItemType File -Path $sourcePath -Force | Out-Null
+                    }
+                    Write-Host "  [CREATED] $($item.Name)  empty $($item.Type.ToLower()) at $sourcePath" -ForegroundColor DarkGray
+                    $countPlaceholder++
+                }
             }
+
+            # Create symlink (target path should now be free)
+            New-Item -ItemType SymbolicLink -Path $targetPath -Target $sourcePath -Force | Out-Null
+            Write-Host "  [LINKED]  $($item.Name)  $targetPath -> $sourcePath" -ForegroundColor Green
+            $countLinked++
+
+        } catch {
+            Write-Host "  [FAILED]  $($item.Name)  — $($_.Exception.Message)" -ForegroundColor Red
+            $countFailed++
         }
     }
 
@@ -333,83 +377,194 @@ function Deploy-Symlinks {
     Write-Host "  =====================================================" -ForegroundColor $summaryColor
     Write-Host "  $summaryTitle" -ForegroundColor $summaryColor
     Write-Host "  =====================================================" -ForegroundColor $summaryColor
-    Write-Host "  $(if ($global:DryRun) { 'Would link' } else { 'Linked  ' }) : $countLinked" -ForegroundColor Green
-    if ($countBacked  -gt 0) { Write-Host "  $(if ($global:DryRun) { 'Would backup' } else { 'Backed up' }): $countBacked" -ForegroundColor DarkYellow }
-    if ($countSkipped -gt 0) { Write-Host "  Skipped  : $countSkipped  (source missing in dotfiles)" -ForegroundColor DarkGray }
-    if ($countFailed  -gt 0) { Write-Host "  Failed   : $countFailed   (check admin rights)" -ForegroundColor Red }
+    if ($countMoved       -gt 0) { Write-Host "  $(if ($global:DryRun) { 'Would move    ' } else { 'Moved         ' }) : $countMoved  (existing configs adopted)" -ForegroundColor Cyan }
+    if ($countPlaceholder -gt 0) { Write-Host "  $(if ($global:DryRun) { 'Would create  ' } else { 'Placeholders  ' }) : $countPlaceholder  (empty files/folders created)" -ForegroundColor DarkGray }
+    Write-Host "  $(if ($global:DryRun) { 'Would link    ' } else { 'Linked        ' }) : $countLinked" -ForegroundColor Green
+    if ($countSkipped     -gt 0) { Write-Host "  Skipped       : $countSkipped  (already linked or source conflict)" -ForegroundColor DarkGray }
+    if ($countFailed      -gt 0) { Write-Host "  Failed        : $countFailed  (check admin rights)" -ForegroundColor Red }
     Write-Host "  =====================================================" -ForegroundColor $summaryColor
+    if (-not $global:DryRun -and $countLinked -gt 0) {
+        Write-Host ""
+        Write-Host "  Your configs are now in: $dotfilesDir" -ForegroundColor Yellow
+        Write-Host "  Edit them there, or replace with files from this repo." -ForegroundColor Yellow
+    }
     Write-Host ""
     Write-Host "  Done! Press any key to return to menu..."
     $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 }
 
 # =====================================================================
-# OPTION 0: Cleanup symlinks
+# HELPER: Get-LiveSymlinks
+# Scans the system for existing symlinks (same logic as Option 2)
+# and returns them as a list of objects for use in cleanup.
+# =====================================================================
+function Get-LiveSymlinks {
+    $homeLinks = Get-ChildItem -Path ~ -Recurse -Depth 4 -Force -ErrorAction SilentlyContinue |
+        Where-Object { $_.LinkType -eq 'SymbolicLink' }
+
+    $extraPaths = $global:SymlinkMap |
+        Where-Object { -not $_.Target.StartsWith($HOME) } |
+        ForEach-Object { $_.Target }
+
+    $allEntries = @()
+
+    foreach ($link in $homeLinks) {
+        $mapEntry = $global:SymlinkMap | Where-Object { $_.Target -eq $link.FullName } | Select-Object -First 1
+        $allEntries += [PSCustomObject]@{
+            FullName  = $link.FullName
+            Target    = $link.Target
+            IsManaged = $null -ne $mapEntry
+            AppName   = if ($mapEntry) { $mapEntry.Name } else { '' }
+            IsHealthy = ($link.Target -and (Test-Path $link.Target))
+        }
+    }
+
+    foreach ($path in $extraPaths) {
+        if (Test-Path $path) {
+            $item = Get-Item $path -ErrorAction SilentlyContinue
+            if ($item.LinkType -eq 'SymbolicLink') {
+                if (-not ($allEntries | Where-Object { $_.FullName -eq $path })) {
+                    $mapEntry = $global:SymlinkMap | Where-Object { $_.Target -eq $path } | Select-Object -First 1
+                    $allEntries += [PSCustomObject]@{
+                        FullName  = $path
+                        Target    = $item.Target
+                        IsManaged = $true
+                        AppName   = if ($mapEntry) { $mapEntry.Name } else { '' }
+                        IsHealthy = ($item.Target -and (Test-Path $item.Target))
+                    }
+                }
+            }
+        }
+    }
+
+    return $allEntries
+}
+
+# =====================================================================
+# OPTION 0: Cleanup — selective interactive symlink removal
 # =====================================================================
 function Cleanup-Symlinks {
-    Write-Host ""
-    if ($global:DryRun) {
-        Write-Host "  =====================================================" -ForegroundColor Magenta
-        Write-Host "   CLEANUP PREVIEW (DRY RUN — nothing will be removed)" -ForegroundColor Magenta
-        Write-Host "  =====================================================" -ForegroundColor Magenta
-    } else {
-        Write-Host "  =====================================================" -ForegroundColor Red
-        Write-Host "   DANGER ZONE: REMOVE SYMLINKS" -ForegroundColor Red
-        Write-Host "  =====================================================" -ForegroundColor Red
-        Write-Host "  This removes all ricing symlinks managed by this script."
-        Write-Host "  Your actual dotfiles in the dotfiles directory are NOT deleted."
-    }
-    Write-Host ""
-
-    # In live mode, require explicit Y before doing anything
-    if (-not $global:DryRun) {
-        $confirm = Read-Host "  Type Y to confirm removal, anything else to cancel"
-        if ($confirm -notmatch "^[Yy]$") {
-            Write-Host "`n  Cleanup cancelled." -ForegroundColor Yellow
-            Start-Sleep -Seconds 2
-            return
+    while ($true) {
+        Clear-Host
+        if ($global:DryRun) {
+            Write-Host "  =====================================================" -ForegroundColor Magenta
+            Write-Host "   CLEANUP MENU  [DRY RUN — nothing will be removed]" -ForegroundColor Magenta
+            Write-Host "  =====================================================" -ForegroundColor Magenta
+        } else {
+            Write-Host "  =====================================================" -ForegroundColor Red
+            Write-Host "   CLEANUP MENU — SELECT SYMLINKS TO REMOVE" -ForegroundColor Red
+            Write-Host "  =====================================================" -ForegroundColor Red
         }
         Write-Host ""
-    }
 
-    $countRemoved = 0
-    $countSkipped = 0
-    $countMissing = 0
+        # Pull live symlink list fresh on each loop iteration
+        Write-Host "  Scanning system for symlinks..." -ForegroundColor DarkGray
+        $symlinks = Get-LiveSymlinks
 
-    foreach ($item in $global:SymlinkMap) {
-        if (Test-Path $item.Target) {
-            $entry = Get-Item $item.Target -ErrorAction SilentlyContinue
-            if ($entry.LinkType -eq 'SymbolicLink') {
-                if ($global:DryRun) {
-                    Write-Host "  [DRY RUN] Would remove: $($item.Name)  ($($item.Target))" -ForegroundColor Magenta
-                } else {
-                    Remove-Item $item.Target -Force -ErrorAction SilentlyContinue
-                    Write-Host "  [REMOVED] $($item.Name)  ($($item.Target))" -ForegroundColor Yellow
+        if ($symlinks.Count -eq 0) {
+            Write-Host ""
+            Write-Host "  No symlinks found on this system." -ForegroundColor DarkGray
+            Write-Host ""
+            Write-Host "  Press any key to return to menu..."
+            $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            return
+        }
+
+        Write-Host ""
+        # Print numbered list
+        for ($i = 0; $i -lt $symlinks.Count; $i++) {
+            $entry      = $symlinks[$i]
+            $num        = "$($i + 1)".PadLeft(3)
+            $nameTag    = if ($entry.AppName) { " $($entry.AppName):" } else { '  (unmanaged):' }
+            $managed    = if ($entry.IsManaged) { '*' } else { ' ' }
+            $statusColor = if ($entry.IsHealthy) { 'Green' } else { 'Red' }
+            $statusTag  = if ($entry.IsHealthy) { 'OK    ' } else { 'BROKEN' }
+
+            Write-Host "  $num. [$statusTag]$managed$nameTag $($entry.FullName)" -ForegroundColor $statusColor
+            Write-Host "       -> $($entry.Target)" -ForegroundColor DarkGray
+        }
+
+        Write-Host ""
+        Write-Host "  * = managed by this script" -ForegroundColor DarkGray
+        Write-Host ""
+        Write-Host "  Enter a number to remove that symlink" -ForegroundColor Yellow
+        Write-Host "  Enter A to remove ALL listed symlinks" -ForegroundColor Yellow
+        Write-Host "  Enter Q to go back to main menu" -ForegroundColor Yellow
+        Write-Host ""
+
+        $input = Read-Host "  Your choice"
+
+        if ($input.ToUpper() -eq 'Q') { return }
+
+        if ($input.ToUpper() -eq 'A') {
+            # Remove all
+            if ($global:DryRun) {
+                Write-Host ""
+                foreach ($entry in $symlinks) {
+                    Write-Host "  [DRY RUN] Would remove: $($entry.FullName)" -ForegroundColor Magenta
                 }
-                $countRemoved++
+                Write-Host ""
+                Write-Host "  Press any key to continue..." -ForegroundColor DarkGray
+                $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
             } else {
-                Write-Host "  [SKIP]    $($item.Name)  (not a symlink — left untouched)" -ForegroundColor DarkGray
-                $countSkipped++
+                $confirm = Read-Host "  Remove ALL $($symlinks.Count) symlinks? Type Y to confirm"
+                if ($confirm -notmatch "^[Yy]$") {
+                    Write-Host "  Cancelled." -ForegroundColor Yellow
+                    Start-Sleep -Seconds 1
+                    continue
+                }
+                Write-Host ""
+                foreach ($entry in $symlinks) {
+                    try {
+                        Remove-Item $entry.FullName -Force -ErrorAction Stop
+                        Write-Host "  [REMOVED] $($entry.FullName)" -ForegroundColor Yellow
+                    } catch {
+                        Write-Host "  [FAILED]  $($entry.FullName) — $($_.Exception.Message)" -ForegroundColor Red
+                    }
+                }
+                Write-Host ""
+                Write-Host "  Done. Press any key to continue..." -ForegroundColor DarkGray
+                $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            }
+            continue
+        }
+
+        # Parse number input
+        $num = $null
+        if ([int]::TryParse($input, [ref]$num)) {
+            if ($num -ge 1 -and $num -le $symlinks.Count) {
+                $entry = $symlinks[$num - 1]
+                Write-Host ""
+
+                if ($global:DryRun) {
+                    Write-Host "  [DRY RUN] Would remove: $($entry.FullName)" -ForegroundColor Magenta
+                    Write-Host "            -> $($entry.Target)" -ForegroundColor DarkGray
+                } else {
+                    $confirm = Read-Host "  Remove '$($entry.FullName)'? [Y/n]"
+                    if ($confirm -notmatch "^[Yy]$" -and $confirm -ne "") {
+                        Write-Host "  Cancelled." -ForegroundColor Yellow
+                        Start-Sleep -Seconds 1
+                        continue
+                    }
+                    try {
+                        Remove-Item $entry.FullName -Force -ErrorAction Stop
+                        Write-Host "  [REMOVED] $($entry.FullName)" -ForegroundColor Yellow
+                    } catch {
+                        Write-Host "  [FAILED]  $($entry.FullName) — $($_.Exception.Message)" -ForegroundColor Red
+                    }
+                }
+
+                Start-Sleep -Seconds 1
+                # List refreshes automatically on next loop iteration
+            } else {
+                Write-Host "  Invalid number. Enter 1–$($symlinks.Count), A, or Q." -ForegroundColor Red
+                Start-Sleep -Seconds 1
             }
         } else {
-            Write-Host "  [  --  ]  $($item.Name)  (target not found)" -ForegroundColor DarkGray
-            $countMissing++
+            Write-Host "  Invalid input. Enter a number, A, or Q." -ForegroundColor Red
+            Start-Sleep -Seconds 1
         }
     }
-
-    Write-Host ""
-    $summaryColor = if ($global:DryRun) { 'Magenta' } else { 'Green' }
-    $removedLabel = if ($global:DryRun) { 'Would remove' } else { 'Removed     ' }
-    Write-Host "  =====================================================" -ForegroundColor $summaryColor
-    Write-Host "  $(if ($global:DryRun) { 'CLEANUP DRY RUN SUMMARY' } else { 'CLEANUP SUMMARY' })" -ForegroundColor $summaryColor
-    Write-Host "  =====================================================" -ForegroundColor $summaryColor
-    Write-Host "  $removedLabel : $countRemoved" -ForegroundColor $(if ($countRemoved -gt 0) { 'Yellow' } else { 'DarkGray' })
-    if ($countSkipped -gt 0) { Write-Host "  Skipped      : $countSkipped  (real files, not symlinks)" -ForegroundColor DarkGray }
-    if ($countMissing -gt 0) { Write-Host "  Not found    : $countMissing" -ForegroundColor DarkGray }
-    Write-Host "  =====================================================" -ForegroundColor $summaryColor
-    Write-Host ""
-    Write-Host "  Press any key to return to menu..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 }
 
 # =====================================================================
