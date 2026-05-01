@@ -31,7 +31,7 @@
 
 **1. Clone the repo**
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/Dotfiles
+git clone https://github.com/sttteampunk/win11-rice.git ~/Dotfiles
 ```
 
 **2. Enable Developer Mode** (required for symlinks without admin elevation on every run)
