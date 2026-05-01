@@ -1,0 +1,63 @@
+[opener]
+edit = [
+    { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+    # Removed quotes: Yazi will auto-quote %* if there are spaces
+    { run = 'nvim %*', block = true, desc = "Neovim", for = "windows" },
+]
+open = [
+    { run = 'xdg-open "$@"',                desc = "Open", for = "linux" },
+    { run = 'open "$@"',                    desc = "Open", for = "macos" },
+    # Removed quotes around %1 to prevent Windows double-quote chopping
+    { run = 'start "" %1', orphan = true, desc = "Open", for = "windows" },
+]
+reveal = [
+    { run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
+    # Removed quotes around %1
+    { run = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
+    { run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+]
+extract = [
+    { run = 'unar "$1"', desc = "Extract here", for = "unix" },
+    # Removed quotes around %1
+    { run = 'unar %1', desc = "Extract here", for = "windows" },
+]
+play = [
+    { run = 'mpv "$@"', orphan = true, for = "unix" },
+    # Removed quotes around %*
+    { run = 'mpv %*', orphan = true, for = "windows" },
+    { run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+]
+
+[open]
+rules = [
+    { name = "*/", use = [ "edit", "open", "reveal" ] },
+    # 1. HARDCODED OVERRIDES: Put these before the text/* rule!
+    # This forces Neovim for coding files that Windows fails to recognize.
+    { name = "*.lua", use = [ "edit", "reveal" ] },
+    { name = "*.toml", use = [ "edit", "reveal" ] },
+    { name = "*.jsonc", use = [ "edit", "reveal" ] },
+    { name = "*.json", use = [ "edit", "reveal" ] },
+    { name = "*.py", use = [ "edit", "reveal" ] },
+    { name = "*.txt", use = [ "edit", "reveal" ] },
+    # These text/code rules will now all use Neovim automatically
+    { mime = "text/*",  use = [ "edit", "reveal" ] },
+    { mime = "inode/x-empty", use = [ "edit", "reveal" ] },
+    { mime = "application/json", use = [ "edit", "reveal" ] },
+    { mime = "*/javascript",     use = [ "edit", "reveal" ] },
+
+    { mime = "image/*", use = [ "open", "reveal" ] },
+    { mime = "video/*", use = [ "play", "reveal" ] },
+    { mime = "audio/*", use = [ "play", "reveal" ] },
+
+    { mime = "application/zip",             use = [ "extract", "reveal" ] },
+    { mime = "application/gzip",            use = [ "extract", "reveal" ] },
+    { mime = "application/x-tar",           use = [ "extract", "reveal" ] },
+    { mime = "application/x-bzip",          use = [ "extract", "reveal" ] },
+    { mime = "application/x-bzip2",         use = [ "extract", "reveal" ] },
+    { mime = "application/x-7z-compressed", use = [ "extract", "reveal" ] },
+    { mime = "application/x-rar",           use = [ "extract", "reveal" ] },
+    { mime = "application/xz",              use = [ "extract", "reveal" ] },
+
+    # Anything not explicitly defined will be opened by Windows natively
+    { mime = "*", use = [ "open", "reveal" ] },
+]

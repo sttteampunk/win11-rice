@@ -1,0 +1,51 @@
+# Add a blank line between previous command output and the new prompt
+add_newline = false
+scan_timeout = 8
+
+# The core layout of the prompt
+format = '''
+[┌\[](fg:#A0A1A4)$username[\]](fg:#A0A1A4)$python
+[└\[](fg:#A0A1A4)$directory[\]](fg:#A0A1A4)$git_branch$git_status
+$shell'''
+
+# 1. Username settings (Top line)
+[username]
+show_always = true
+format = '[$user]($style)'
+style_user = "fg:#E5E7EB"
+style_root = "bold red"
+
+# 2. Directory settings (Middle line)
+[directory]
+format = '[$path]($style)'
+style = "fg:#E5E7EB"
+truncation_length = 3
+truncate_to_repo = false
+
+[character]
+style = "fg:#A0A1A4"
+success_symbol = " $shell\\$"
+error_symbol = " $shell✖"
+
+[shell]
+disabled = false
+style = "fg:#A0A1A4"
+powershell_indicator = " λ "
+bash_indicator = " \\$"
+zsh_indicator = " \\$"
+
+# 4. Git settings (Hidden unless you are inside a Git repository)
+# I added this so if you enter a repo, it adds [main] cleanly to the middle line!
+[git_branch]
+format = ' [\[](fg:#A9A9A9)[$branch](fg:#E0E0E0)[\]](fg:#A9A9A9)'
+
+[git_status]
+format = ' [\[](fg:#A9A9A9)[$all_status$ahead_behind](fg:#E0E0E0)[\]](fg:#A9A9A9)'
+
+[python]
+symbol = " "
+# This forces Starship to show the venv name inside parentheses
+format = ' [\[](#A9A9A9)[via ${symbol}${version}](#A9A9A9)[\]](#A9A9A9)( [\[](#A9A9A9)[$virtualenv](#E5E7EB)[\]](#A9A9A9)) '
+# This ensures the prompt triggers whenever a venv is activated, 
+# even if there are no .py files in the current folder
+detect_env_vars = ['VIRTUAL_ENV']

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "file",
+    "source": "C:/Users/Lenovo/.config/fastfetch/rune.txt",
+    "color": {
+      "1": "#E5E7EB" // Forces the rune to be crisp white to match your monochrome rice
+    },
+    "padding": {
+      "top": 0,
+      "left": 0,
+      "right": 0
+    }
+  },
+  "display": {
+    "separator": " ~ ", // Creates the tilde separator
+    "color": {
+      "keys": "#A0A1A4" // Makes the icons pure white instead of your system accent color
+    },
+    "constants": [
+      "────────────────────────────────────"
+    ]
+  },
+  "modules": [
+    // 1. The Japanese Header
+    {
+      "type": "title",
+      "format": "        {#green}{1} {#1}@ {#1}コンピューター" 
+    },
+    // 2. Top Border
+    {
+      "type": "custom",
+      "format": "┌{$1}┐"
+    },
+    // 3. The System Modules
+    {
+      "type": "os",
+      "key": " 󰍹 ",
+      "format": "{3}" // {2} = Windows 11 Home, {3} = 25H2
+    },
+    {
+      "type": "kernel",
+      "key": " 󰌽 ",
+      "format": "{1}"
+    },
+    {
+      "type": "packages",
+      "key": " 󰏗 "
+    },
+    {
+      "type": "custom", // Forces Fastfetch to stop looking for dwm.exe
+      "key": " 󰨇 ",
+      "format": "Komorebi"
+    },
+    {
+      "type": "custom", // Forces Fastfetch to drop the .exe extension
+      "key": "  ",
+      "format": "WezTerm"
+    },
+    {
+      "type": "disk",
+      "key": " 󰋊 ",
+      "format": "{1} / {2} ({3})" // Keeps size and percentage, drops NTFS
+    },
+    {
+      "type": "memory",
+      "key": " 󰍛 "
+    },
+    // Battery module has been completely deleted
+    {
+      "type": "uptime",
+      "key": " 󰅐 "
+    },
+    // 4. The Custom Color Blocks
+    {
+      "type": "custom",
+      // Just add or delete spacebars between these symbols to get the exact width you want!
+      "format": " {#white}ᚼ    {#red}ᚼ    {#green}ᚼ    {#yellow}ᚼ    {#blue}ᚼ    {#magenta}ᚼ    {#cyan}ᚼ    {#white}ᚼ"
+    },
+    // 5. Bottom Border
+    {
+      "type": "custom",
+      "format": "└{$1}┘"
+    }
+  ]
+}

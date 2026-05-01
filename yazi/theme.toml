@@ -1,0 +1,119 @@
+# D:\Dotfiles\yazi\theme.toml
+
+[icon]
+dirs = [
+	{ name = ".config", text = "", fg = "#E5E7EB" },
+	{ name = ".git", text = "", fg = "#E5E7EB" },
+	{ name = ".github", text = "", fg = "#E5E7EB" },
+	{ name = ".npm", text = "", fg = "#E5E7EB" },
+	{ name = "Desktop", text = "", fg = "#E5E7EB" },
+	{ name = "Development", text = "", fg = "#E5E7EB" },
+	{ name = "Documents", text = "", fg = "#E5E7EB" },
+	{ name = "Downloads", text = "", fg = "#E5E7EB" },
+	{ name = "Library", text = "", fg = "#E5E7EB" },
+	{ name = "Movies", text = "", fg = "#E5E7EB" },
+	{ name = "Music", text = "", fg = "#E5E7EB" },
+	{ name = "Drawings", text = "", fg = "#E5E7EB" },
+	{ name = "Public", text = "", fg = "#E5E7EB" },
+	{ name = "Videos", text = "", fg = "#E5E7EB" },
+]
+files = [
+	{ name = ".gitignore", text = "", fg = "#555659" },
+	{ name = ".env", text = "", fg = "#98999D" }
+]
+exts = [
+	{ name = "py", text = "", fg = "#D2D3D7" },
+	{ name = "lua", text = "", fg = "#D2D3D7" },
+	{ name = "md", text = "", fg = "#D2D3D7" },
+	{ name = "json", text = "", fg = "#D2D3D7" },
+	{ name = "toml", text = "", fg = "#D2D3D7" },
+	{ name = "txt", text = "", fg = "#D2D3D7" },
+	{ name = "zip", text = "", fg = "#555659" },
+	{ name = "rar", text = "", fg = "#555659" },
+	{ name = "png", text = "", fg = "#555659" },
+	{ name = "jpg", text = "", fg = "#555659" },
+	{ name = "exe", text = "", fg = "#B0B1B5" }
+]
+conds = [
+	# Special files
+	{ if = "orphan", text = "", fg = "#E5E7EB" },
+	{ if = "link", text = "", fg = "#E5E7EB" },
+	{ if = "block", text = "", fg = "#E5E7EB" },
+	{ if = "char", text = "", fg = "#E5E7EB" },
+	{ if = "fifo", text = "", fg = "#E5E7EB" },
+	{ if = "sock", text = "", fg = "#E5E7EB" },
+	{ if = "sticky", text = "", fg = "#E5E7EB" },
+	{ if = "dummy", text = "", fg = "#E5E7EB" },
+
+	# Fallback
+	{ if = "dir & hovered", text = "", fg = "#E5E7EB" },
+	{ if = "dir", text = "", fg = "#E5E7EB" },
+	{ if = "exec", text = "", fg = "#E5E7EB" },
+	{ if = "!dir", text = "", fg = "#E5E7EB" },
+]
+
+[mgr]
+cwd = { fg = "#E5E7EB" }
+
+# Hovered items (Uses your Neovim visual selection color)
+hovered         = { fg = "#E5E7EB", bg = "#2C2C32", bold = true }
+preview_hovered = { bg = "#2C2C32" }
+
+# Find and Search
+find_keyword  = { fg = "#BDBFC3", italic = true }
+find_position = { fg = "#87888C", bg = "reset", italic = true }
+
+# Markers (Copied, Cut, Selected indicators)
+marker_copied   = { fg = "#A7A9AC", bg = "#A7A9AC" }
+marker_cut      = { fg = "#98999D", bg = "#98999D" }
+marker_marked   = { fg = "#848589", bg = "#848589" }
+
+border_symbol = "│"
+border_style  = { fg = "#47474A" }
+
+[tabs]
+active   = { fg = "#18181B", bg = "#E5E7EB", bold = true }
+inactive   = { fg = "#E5E7EB", bg = "#18181B" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+# SYNTAX HIGHLIGHTING (Killing the neon file colors)
+[filetype]
+rules = [
+	# Directories
+	{ mime = "inode/directory", fg = "#E5E7EB", bold = true },
+	# Fallback for all other files
+	{ name = "*", fg = "#87888C" },
+]
+
+
+[mode]
+normal_main = { fg = "#18181B", bg = "#E5E7EB", bold = true }
+normal_alt = { fg = "#E5E7EB", bg = "#18181B", bold = true }
+
+select_main = { fg = "#848589", bg = "#18181B", bold = true }
+select_alt = { fg = "#848589", bg = "#18181B", bold = true }
+
+unset_main = { fg = "#848589", bg = "#18181B", bold = true }
+unset_alt = { fg = "#848589", bg = "#18181B", bold = true }
+
+
+[status]
+overall   = {}
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+separator_style = { fg = "reset", bg = "reset" }
+
+progress_label  = { fg = "#E5E7EB", bold = true }
+progress_normal = { fg = "#848589", bg = "#232326" }
+progress_error  = { fg = "#98999D", bg = "#232326" }
+
+# Permissions
+permissions_t = { fg = "#848589" }
+permissions_r = { fg = "#BDBFC3" }
+permissions_w = { fg = "#98999D" }
+permissions_x = { fg = "#A7A9AC" }
+permissions_s = { fg = "#555659" }
+
+[indicator]
+padding = { open = "▐", close = "" }
