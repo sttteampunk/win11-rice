@@ -277,4 +277,4 @@ From here, the setup is yours. Customize configs, swap themes, explore the tools
 
 - **Darren Lingter's guide** (highly recommended starting point) → [YouTube](https://www.youtube.com/watch?v=9RJre4byy2g&t=282s)
 - **MonochromeV2 dotfiles** (baseline for this repo's dotfiles) → [GitHub](https://github.com/MrDLingters/Win11MonochromeV2)
-- **Nyte Tyde's art**(Original art for some of wallpapers) [X](https://x.com/Nyte_Tyde)
+- **Nyte Tyde's art**(Original art for some of wallpapers) → [X](https://x.com/Nyte_Tyde)
