@@ -281,7 +281,7 @@ widgets:
     type: "yasb.wallpapers.WallpapersWidget"
     options:
       label: "<span>\udb83\ude09</span>"
-      image_path: "D:\\Drawings\\WallPapers\\Monochrome"
+      image_path: "D:\\Dotfiles\\wallpapers"
       change_automatically: false
       update_interval: 60
       animation:
