@@ -10,6 +10,8 @@
 <!-- <img src="assets/7.jpg" width="100%" /> -->
 <!-- <img src="assets/8.jpg" width="100%" /> -->
 <!-- <img src="assets/9.jpg" width="100%" /> -->
+![Setup Preview](assets/1.jpg)
+
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2011-blue?style=flat-square&logo=windows)
 ![Shell](https://img.shields.io/badge/shell-PowerShell%207-5391FE?style=flat-square&logo=powershell)
