@@ -17,7 +17,7 @@
 
 </div>
 
-> _A guide to installing and configuring a full Windows ricing stack — from terminal emulator to system-level UI mods._
+> _A guide to installing and configuring a full Windows ricing stack - from terminal emulator to system-level UI mods._
 
 ---
 
@@ -45,7 +45,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 ```
 1 → Scan Programs     (detect what's installed)
-5 → Enable Dry-run    (optional — preview everything safely first)
+5 → Enable Dry-run    (optional - preview everything safely first)
 3 → Deploy            (create all symlinks)
 4 → Check Health      (verify everything linked correctly)
 ```
@@ -60,32 +60,32 @@ That's it. Most tools take effect immediately. See [Applying the Dotfiles](#appl
 
 | **Tool** | **Description** | **Why It's Here** |
 |---|---|---|
-| **PowerShell 7** | Modern, cross-platform shell | The backbone of your terminal — loads aliases, the Starship prompt, and custom functions natively |
+| **PowerShell 7** | Modern, cross-platform shell | The backbone of your terminal - loads aliases, the Starship prompt, and custom functions natively |
 | **WezTerm** | GPU-accelerated terminal emulator configured via Lua | Blazing-fast rendering with image previews, multiplexing, and fully customizable hotkeys |
-| **Fastfetch** | System info display tool | Written in C — extremely fast and highly customizable with ASCII art output |
+| **Fastfetch** | System info display tool | Written in C - extremely fast and highly customizable with ASCII art output |
 | **Starship** | Cross-shell prompt framework | Context-aware (shows Git branch, Node version, etc.), written in Rust, and visually clean |
-| **Neovim** | Hyper-extensible terminal text editor | The ultimate keyboard-driven developer editor — fully configurable via Lua |
-| **Yazi** | Async terminal file manager | Navigate your drives without File Explorer — supports full image/video previews inside WezTerm |
-| **Komorebi** | Dynamic tiling window manager for Windows | Brings Linux/bspwm-style window management to Windows — arranges windows into non-overlapping tiles |
-| **Yasb** | Customizable status bar | Replaces the Windows taskbar — pairs perfectly with Komorebi to show workspaces and system stats |
+| **Neovim** | Hyper-extensible terminal text editor | The ultimate keyboard-driven developer editor - fully configurable via Lua |
+| **Yazi** | Async terminal file manager | Navigate your drives without File Explorer - supports full image/video previews inside WezTerm |
+| **Komorebi** | Dynamic tiling window manager for Windows | Brings Linux/bspwm-style window management to Windows - arranges windows into non-overlapping tiles |
+| **Yasb** | Customizable status bar | Replaces the Windows taskbar - pairs perfectly with Komorebi to show workspaces and system stats |
 | **Visual Studio Code** | Industry-standard GUI code editor | Deep OS integration, right-click context menu support, and a massive extension ecosystem |
-| **Flow Launcher** | Keystroke-driven app launcher | Fully replaces Windows Start Menu search — supports web queries, file finding, and custom plugins |
+| **Flow Launcher** | Keystroke-driven app launcher | Fully replaces Windows Start Menu search - supports web queries, file finding, and custom plugins |
 | **Spicetify** | CSS/JS injector for the Spotify client | Enables complete UI overhauls, ad-blocking, and custom extensions |
 | **Vencord** | Client mod and themer for Discord | Adds privacy features, custom CSS themes, and quality-of-life plugins |
-| **Windhawk** | Deep system mod tool via `explorer.exe` injection | Modular, safer than patching system files — tweak taskbar labels, icon sizes, and more |
-| **Nilesoft Shell** | Windows 11 right-click menu replacement | Removes the "Show more options" annoyance — replaces it with a fast, fully themable compact menu |
+| **Windhawk** | Deep system mod tool via `explorer.exe` injection | Modular, safer than patching system files - tweak taskbar labels, icon sizes, and more |
+| **Nilesoft Shell** | Windows 11 right-click menu replacement | Removes the "Show more options" annoyance - replaces it with a fast, fully themable compact menu |
 
 ---
 
 ## Installation
 
-### Phase 1 — The Foundation
+### Phase 1 - The Foundation
 
 > You can't build a house without pouring the concrete first. This phase sets up the terminal environment used throughout the rest of the installation.
 
 #### 1. Nerd Font
 
-**Why:** Nearly every tool in this guide — Starship, Yazi, Terminal-Icons, and Neovim — depends on Nerd Font icons. Without one set as your terminal's default font, your setup will display broken boxes instead of icons.
+**Why:** Nearly every tool in this guide - Starship, Yazi, Terminal-Icons, and Neovim - depends on Nerd Font icons. Without one set as your terminal's default font, your setup will display broken boxes instead of icons.
 
 **Installation:** Pick any font you like. The dotfiles in this repo use **JetBrains Mono**. Download the `.zip` and install all `.ttf` files from the archive.
 
@@ -121,7 +121,7 @@ winget install --id Git.Git -e --source winget
 
 #### 4. Scoop
 
-**Why:** Scoop is a command-line package manager for Windows — like `apt` on Linux or `brew` on macOS. Instead of hunting `.zip` files and manually editing `PATH` variables, Scoop handles everything automatically. It installs apps into a single isolated folder (`~/scoop`), keeping the Windows Registry clean and avoiding permission errors.
+**Why:** Scoop is a command-line package manager for Windows - like `apt` on Linux or `brew` on macOS. Instead of hunting `.zip` files and manually editing `PATH` variables, Scoop handles everything automatically. It installs apps into a single isolated folder (`~/scoop`), keeping the Windows Registry clean and avoiding permission errors.
 
 **Installation:**
 ```bash
@@ -135,9 +135,9 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
 #### 5. WezTerm
 
-**Why:** WezTerm is a GPU-accelerated, cross-platform terminal emulator configured in Lua — making it exceptionally versatile for ricing. It also supports multiplexed terminal layouts, which pairs well with Neovim. You can stick with Windows Terminal, but WezTerm is strongly recommended.
+**Why:** WezTerm is a GPU-accelerated, cross-platform terminal emulator configured in Lua - making it exceptionally versatile for ricing. It also supports multiplexed terminal layouts, which pairs well with Neovim. You can stick with Windows Terminal, but WezTerm is strongly recommended.
 
-**Installation:** Go with the [nightly build](https://github.com/wezterm/wezterm/releases/tag/nightly) — it's stable and includes all the latest features.
+**Installation:** Go with the [nightly build](https://github.com/wezterm/wezterm/releases/tag/nightly) - it's stable and includes all the latest features.
 
 → [Download WezTerm Nightly (.exe)](https://github.com/wezterm/wezterm/releases/download/nightly/WezTerm-nightly-setup.exe)
 
@@ -145,7 +145,7 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
 ---
 
-### Phase 2 — Terminal Utilities
+### Phase 2 - Terminal Utilities
 
 Because we're installing community-maintained packages (like the window manager and status bar), we need to add the Scoop `extras` bucket first.
 
@@ -176,14 +176,14 @@ scoop install gcc nodejs python tree-sitter
 
 ---
 
-### Phase 3 — GUI Applications
+### Phase 3 - GUI Applications
 
 Install the following apps manually:
 
 - **Flow Launcher** → [Download](https://www.flowlauncher.com/)
 - **VS Code** → [Download](https://code.visualstudio.com/download)
 
-**Spotify & Discord — important order of operations:** You must install the official apps and log in *before* running their mod installers. Spicetify and Vencord inject into existing folder structures, so the base app needs to be there first.
+**Spotify & Discord - important order of operations:** You must install the official apps and log in *before* running their mod installers. Spicetify and Vencord inject into existing folder structures, so the base app needs to be there first.
 
 - **Vencord** → [Download](https://vencord.dev/download/)
 
@@ -197,7 +197,7 @@ spicetify backup
 
 ---
 
-### Phase 4 — Deep System Modifications
+### Phase 4 - Deep System Modifications
 
 These tools hook into Windows `explorer.exe` to change how the OS itself looks.
 
@@ -208,7 +208,7 @@ These tools hook into Windows `explorer.exe` to change how the OS itself looks.
 
 ## Creating Symlinks
 
-On Windows, app configs are scattered across system directories — unlike Linux, where they live in predictable places. To make ricing manageable, this repo includes a PowerShell script that creates symlinks automatically and checks for installed apps.
+On Windows, app configs are scattered across system directories - unlike Linux, where they live in predictable places. To make ricing manageable, this repo includes a PowerShell script that creates symlinks automatically and checks for installed apps.
 
 Before running it, enable Developer Mode so Windows allows symlink creation without administrator elevation:
 
@@ -224,7 +224,7 @@ Then download the script, run it as Administrator, and follow the terminal promp
 
 ## Applying the Dotfiles
 
-After symlinks are created, navigate to the directory you configured and customize away. You can also use the dotfiles from this repo — just download the files you want and drop them into the appropriate directories.
+After symlinks are created, navigate to the directory you configured and customize away. You can also use the dotfiles from this repo - just download the files you want and drop them into the appropriate directories.
 
 Most changes take effect immediately, but a few tools need extra steps:
 
@@ -265,7 +265,7 @@ Place `theme.nss` in the Nilesoft installation directory, then apply it with `Ct
 
 ## You're Ready
 
-From here, the setup is yours. Customize configs, swap themes, explore the tools — and enjoy a Windows environment that actually feels like *your* environment.
+From here, the setup is yours. Customize configs, swap themes, explore the tools - and enjoy a Windows environment that actually feels like *your* environment.
 
 ---
 
