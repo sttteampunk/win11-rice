@@ -97,7 +97,7 @@ That's it. The script creates `~/Dotfiles` with a subfolder for each installed a
 **Why:** Everything in modern Windows ricing depends on PS7. It must be installed first so you can run all subsequent commands and your master script.
 
 **Installation:**
-```bash
+```powershell
 winget install --id Microsoft.PowerShell --source winget
 ```
 
@@ -110,7 +110,7 @@ winget install --id Microsoft.PowerShell --source winget
 **Why:** Scoop (our package manager) relies on Git under the hood to download community repositories and keep terminal apps updated.
 
 **Installation:**
-```bash
+```powershell
 winget install --id Git.Git -e --source winget
 ```
 
@@ -123,7 +123,7 @@ winget install --id Git.Git -e --source winget
 **Why:** Scoop is a command-line package manager for Windows - like `apt` on Linux or `brew` on macOS. Instead of hunting `.zip` files and manually editing `PATH` variables, Scoop handles everything automatically. It installs apps into a single isolated folder (`~/scoop`), keeping the Windows Registry clean and avoiding permission errors.
 
 **Installation:**
-```bash
+```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```
@@ -149,7 +149,7 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 Because we're installing community-maintained packages (like the window manager and status bar), we need to add the Scoop `extras` bucket first.
 
 **Add the extras bucket:**
-```bash
+```powershell
 scoop bucket add extras
 ```
 
@@ -159,7 +159,7 @@ Now install the entire terminal ricing stack in a single command.
 
 This installs your prompt, file manager, text editor, window manager, and terminal visualizers all at once:
 
-```bash
+```powershell
 scoop install fastfetch starship neovim yazi zoxide fzf ripgrep fd bottom komorebi whkd yasb lazygit pipes-rs terminal-icons
 ```
 
@@ -167,7 +167,7 @@ scoop install fastfetch starship neovim yazi zoxide fzf ripgrep fd bottom komore
 
 Neovim relies on external compilers and runtimes for autocomplete and syntax highlighting. Install these so Neovim doesn't throw errors on launch:
 
-```bash
+```powershell
 scoop install gcc nodejs python tree-sitter
 ```
 
@@ -187,10 +187,10 @@ Install the following apps manually:
 - **Vencord** → [Download](https://vencord.dev/download/)
 
 **Spicetify:**
-```bash
+```powershell
 iwr -useb https://raw.githubusercontent.com/spicetify/cli/main/install.ps1 | iex
 ```
-```bash
+```powershell
 spicetify backup
 ```
 
@@ -221,10 +221,10 @@ Most changes take effect immediately, but a few tools need extra steps:
  
 Download two files: one for extensions, one for the theme. Then run:
  
-```bash
+```powershell
 spicetify config extension noControls.js
 ```
-```bash
+```powershell
 spicetify config current_theme TUI
 ```
  
@@ -232,7 +232,7 @@ spicetify config current_theme TUI
  
 ### Cava (Audio Visualizer for Yasb)
  
-```bash
+```powershell
 winget install karlstav.cava
 ```
  
