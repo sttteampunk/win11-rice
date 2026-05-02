@@ -14,10 +14,10 @@
   ![Setup Preview 9](assets/9.jpg)
 </details>
 
-![Platform](https://img.shields.io/badge/platform-Windows%2011-blue?style=flat-square&logo=windows)
-![Shell](https://img.shields.io/badge/shell-PowerShell%207-5391FE?style=flat-square&logo=powershell)
-![RAM](https://img.shields.io/badge/idle%20RAM-~200--300MB-brightgreen?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-orange?style=flat-square)
+![Windows 11](https://img.shields.io/badge/Windows%2011-%230079d5.svg?style=for-the-badge&logo=Windows%2011&logoColor=white)
+![WezTerm](https://img.shields.io/badge/WezTerm-%234E49EE?style=for-the-badge&logo=wezterm&logoColor=white)
+![RAM](https://img.shields.io/badge/idle%20RAM-~200--300MB-brightgreen?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)
 
 </div>
 
@@ -27,34 +27,30 @@
 
 ## Quick Start
 
-> Already have all the apps installed and just want to apply the dotfiles? Start here.
-
-**1. Clone the repo**
-```bash
-git clone https://github.com/sttteampunk/win11-rice.git ~/Dotfiles
+If you already have some apps installed and would like to just create symlinks and dedicated directiry for dotfiles use this section.
+ 
+> **Prerequisites:** Enable Developer Mode first — Windows requires it for symlinks.
+> `Settings → System → For developers → Developer Mode → On`
+ 
+### Run the script
+ 
+Paste this into **PowerShell 7 as Administrator** — no cloning, no installation needed:
+ 
+```powershell
+irm https://raw.githubusercontent.com/sttteampunk/win11-rice/main/setup.ps1 | iex
 ```
-
-**2. Enable Developer Mode** (required for symlinks without admin elevation on every run)
-
-`Settings → System → For developers → Developer Mode → On`
-
-**3. Run the setup script as Administrator**
-```bash
-cd ~/Dotfiles
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\setup.ps1
+ 
+Then follow the menu:
+ 
 ```
-
-**4. Follow the menu in order**
-
+1 → Scan    detect which ricing apps are installed
+3 → Deploy  create your Dotfiles directory and symlinks
+4 → Check   verify everything linked correctly
 ```
-1 → Scan Programs     (detect what's installed)
-5 → Enable Dry-run    (optional - preview everything safely first)
-3 → Deploy            (create all symlinks)
-4 → Check Health      (verify everything linked correctly)
-```
-
-That's it. Most tools take effect immediately. See [Applying the Dotfiles](#applying-the-dotfiles) for the few that need an extra step.
+ 
+That's it. The script creates `~/Dotfiles` with a subfolder for each installed app. Edit configs there - or drop in files from this repo's `dotfiles/` folder if you want my theme.
+ 
+> **Want to preview before committing?** Run `5 → Toggle dry-run` before Deploy to see exactly what would happen without touching anything.
 
 ---
 
@@ -64,20 +60,20 @@ That's it. Most tools take effect immediately. See [Applying the Dotfiles](#appl
 
 | **Tool** | **Description** | **Why It's Here** |
 |---|---|---|
-| **PowerShell 7** | Modern, cross-platform shell | The backbone of your terminal - loads aliases, the Starship prompt, and custom functions natively |
-| **WezTerm** | GPU-accelerated terminal emulator configured via Lua | Blazing-fast rendering with image previews, multiplexing, and fully customizable hotkeys |
-| **Fastfetch** | System info display tool | Written in C - extremely fast and highly customizable with ASCII art output |
-| **Starship** | Cross-shell prompt framework | Context-aware (shows Git branch, Node version, etc.), written in Rust, and visually clean |
-| **Neovim** | Hyper-extensible terminal text editor | The ultimate keyboard-driven developer editor - fully configurable via Lua |
-| **Yazi** | Async terminal file manager | Navigate your drives without File Explorer - supports full image/video previews inside WezTerm |
-| **Komorebi** | Dynamic tiling window manager for Windows | Brings Linux/bspwm-style window management to Windows - arranges windows into non-overlapping tiles |
-| **Yasb** | Customizable status bar | Replaces the Windows taskbar - pairs perfectly with Komorebi to show workspaces and system stats |
-| **Visual Studio Code** | Industry-standard GUI code editor | Deep OS integration, right-click context menu support, and a massive extension ecosystem |
-| **Flow Launcher** | Keystroke-driven app launcher | Fully replaces Windows Start Menu search - supports web queries, file finding, and custom plugins |
-| **Spicetify** | CSS/JS injector for the Spotify client | Enables complete UI overhauls, ad-blocking, and custom extensions |
-| **Vencord** | Client mod and themer for Discord | Adds privacy features, custom CSS themes, and quality-of-life plugins |
-| **Windhawk** | Deep system mod tool via `explorer.exe` injection | Modular, safer than patching system files - tweak taskbar labels, icon sizes, and more |
-| **Nilesoft Shell** | Windows 11 right-click menu replacement | Removes the "Show more options" annoyance - replaces it with a fast, fully themable compact menu |
+| [**PowerShell 7**](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows?view=powershell-7.6) | Modern, cross-platform shell | The backbone of your terminal - loads aliases, the Starship prompt, and custom functions natively |
+| [**WezTerm**](https://wezterm.org/index.html) | GPU-accelerated terminal emulator configured via Lua | Blazing-fast rendering with image previews, multiplexing, and fully customizable hotkeys |
+| [**Fastfetch**](https://github.com/fastfetch-cli/fastfetch/wiki/Configuration) | System info display tool | Written in C - extremely fast and highly customizable with ASCII art output |
+| [**Starship**](https://starship.rs/) | Cross-shell prompt framework | Context-aware (shows Git branch, Node version, etc.), written in Rust, and visually clean |
+| [**Neovim**](https://neovim.io/) | Hyper-extensible terminal text editor | The ultimate keyboard-driven developer editor - fully configurable via Lua |
+| [**Yazi**](https://yazi-rs.github.io/) | Async terminal file manager | Navigate your drives without File Explorer - supports full image/video previews inside WezTerm |
+| [**Komorebi**](https://komorebi.lgug2z.com/) | Dynamic tiling window manager for Windows | Brings Linux/bspwm-style window management to Windows - arranges windows into non-overlapping tiles |
+| [**Yasb**](https://yasb.dev/) | Customizable status bar | Replaces the Windows taskbar - pairs perfectly with Komorebi to show workspaces and system stats |
+| [**Visual Studio Code**](https://code.visualstudio.com/) | Industry-standard GUI code editor | Deep OS integration, right-click context menu support, and a massive extension ecosystem |
+| [**Flow Launcher**](https://www.flowlauncher.com/) | Keystroke-driven app launcher | Fully replaces Windows Start Menu search - supports web queries, file finding, and custom plugins |
+| [**Spicetify**](https://spicetify.app/) | CSS/JS injector for the Spotify client | Enables complete UI overhauls, ad-blocking, and custom extensions |
+| [**Vencord**](https://vencord.dev/) | Client mod and themer for Discord | Adds privacy features, custom CSS themes, and quality-of-life plugins |
+| [**Windhawk**](https://windhawk.net/) | Deep system mod tool via `explorer.exe` injection | Modular, safer than patching system files - tweak taskbar labels, icon sizes, and more |
+| [**Nilesoft Shell**](https://nilesoft.org/) | Windows 11 right-click menu replacement | Removes the "Show more options" annoyance - replaces it with a fast, fully themable compact menu |
 
 ---
 
@@ -85,11 +81,11 @@ That's it. Most tools take effect immediately. See [Applying the Dotfiles](#appl
 
 ### Phase 1 - The Foundation
 
-> You can't build a house without pouring the concrete first. This phase sets up the terminal environment used throughout the rest of the installation.
+> This phase sets up the terminal environment used throughout the rest of the installation.
 
 #### 1. Nerd Font
 
-**Why:** Nearly every tool in this guide - Starship, Yazi, Terminal-Icons, and Neovim - depends on Nerd Font icons. Without one set as your terminal's default font, your setup will display broken boxes instead of icons.
+**Why:** Nearly every tool in this guide - Starship, Yazi and Neovim - depends on Nerd Font icons. Without one set as your terminal's default font, your setup will display broken boxes instead of icons.
 
 **Installation:** Pick any font you like. The dotfiles in this repo use **JetBrains Mono**. Download the `.zip` and install all `.ttf` files from the archive.
 
@@ -210,71 +206,75 @@ These tools hook into Windows `explorer.exe` to change how the OS itself looks.
 
 ---
 
-## Creating Symlinks
-
-On Windows, app configs are scattered across system directories - unlike Linux, where they live in predictable places. To make ricing manageable, this repo includes a PowerShell script that creates symlinks automatically and checks for installed apps.
-
-Before running it, enable Developer Mode so Windows allows symlink creation without administrator elevation:
-
-**Steps to Enable Developer Mode:**
-1. Press `Windows Key + I` to open Settings
-2. Go to **System → For developers**
-3. Toggle **Developer Mode** to **On**
-4. Confirm the warning prompt
-
-Then download the script, run it as Administrator, and follow the terminal prompts.
-
+## Setting Up Symlinks
+ 
+Once your apps are installed, run `setup.ps1` (see [Quick Start](#quick-start)) to create a central `~/Dotfiles` directory and symlink each app's config folder into it. From that point on, all your configs live in one place - no more hunting through scattered Windows paths.
+ 
 ---
-
+ 
 ## Applying the Dotfiles
-
+ 
 After symlinks are created, navigate to the directory you configured and customize away. You can also use the dotfiles from this repo - just download the files you want and drop them into the appropriate directories.
-
+ 
 Most changes take effect immediately, but a few tools need extra steps:
-
+ 
 ### Spicetify
-
+ 
 Download two files: one for extensions, one for the theme. Then run:
-
+ 
 ```bash
 spicetify config extension noControls.js
 ```
 ```bash
 spicetify config current_theme TUI
 ```
-
+ 
 > `noControls.js` hides the native Windows app toolbar inside Spotify.
-
+ 
 ### Cava (Audio Visualizer for Yasb)
-
+ 
 ```bash
 winget install karlstav.cava
 ```
-
+ 
 ### Windhawk Mods
-
+ 
 The following 4 mods are used in this config:
 - **Resource Redirect**
 - **Notification Center Styler**
 - **Start Menu Styler**
 - **Taskbar Styler**
-
 For each mod, copy the contents of its `.txt` file into the Advanced Settings field. Best practice: right-click → Paste.
-
+ 
 ### Nilesoft Shell
-
+ 
 Place `theme.nss` in the Nilesoft installation directory, then apply it with `Ctrl + Right-click`.
-
+ 
 ---
-
+ 
 ## You're Ready
-
-From here, the setup is yours. Customize configs, swap themes, explore the tools - and enjoy a Windows environment that actually feels like *your* environment.
-
+ 
+From here, the setup is yours. Customize configs, swap themes, explore the tools — and enjoy a Windows environment that actually feels like *your* environment.
+ 
 ---
+
 
 ## Credits
 
 - **Darren Lingter's guide** (highly recommended starting point) → [YouTube](https://www.youtube.com/watch?v=9RJre4byy2g&t=282s)
 - **MonochromeV2 dotfiles** (baseline for this repo's dotfiles) → [GitHub](https://github.com/MrDLingters/Win11MonochromeV2)
 - **Nyte Tyde's art**(Original art for some of wallpapers) → [X](https://x.com/Nyte_Tyde)
+- **WezTerm** → [GitHub](https://github.com/wezterm/wezterm)
+- **Fastfetch** → [GitHub](https://github.com/fastfetch-cli/fastfetch)
+- **Starship** → [GitHub](https://github.com/starship/starship)
+- **Neovim** → [GitHub](https://github.com/neovim/neovim)
+- **Lazyvim** → [GitHub](https://github.com/LazyVim/LazyVim)
+- **Yazi** → [GitHub](https://github.com/sxyazi/yazi)
+- **Komorebi** → [GitHub](https://github.com/LGUG2Z/komorebi)
+- **Yasb** → [GitHub](https://github.com/amnweb/yasb)
+- **Flow Launcher** → [GitHub](https://github.com/flow-launcher/flow.launcher)
+- **Spicetify** → [GitHub](https://github.com/spicetify)
+- **Vencord** → [GitHub](https://github.com/Vendicated/Vencord)
+- **WindHawk** → [GitHub](https://github.com/ramensoftware/windhawk)
+- **Nilesoft Shell** → [GitHub](https://github.com/moudey/shell)
+
