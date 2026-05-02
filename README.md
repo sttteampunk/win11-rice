@@ -14,10 +14,9 @@
   ![Setup Preview 9](assets/9.jpg)
 </details>
 
-![Windows 11](https://img.shields.io/badge/Windows%2011-%230079d5.svg?style=for-the-badge&logo=Windows%2011&logoColor=white)
-![WezTerm](https://img.shields.io/badge/WezTerm-%234E49EE?style=for-the-badge&logo=wezterm&logoColor=white)
-![RAM](https://img.shields.io/badge/idle%20RAM-~200--300MB-brightgreen?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)
+![Windows 11](https://img.shields.io/badge/Windows%2011-18181b?style=for-the-badge&logo=Windows%2011&logoColor=E5E7EB&labelColor=18181b)
+![RAM](https://img.shields.io/badge/idle%20RAM-~200--300MB-E5E7EB?style=for-the-badge&labelColor=18181b)
+![License](https://img.shields.io/badge/license-MIT-E5E7EB?style=for-the-badge&labelColor=18181b)
 
 </div>
 
@@ -29,12 +28,12 @@
 
 If you already have some apps installed and would like to just create symlinks and dedicated directiry for dotfiles use this section.
  
-> **Prerequisites:** Enable Developer Mode first — Windows requires it for symlinks.
+> **Prerequisites:** Enable Developer Mode first - Windows requires it for symlinks.
 > `Settings → System → For developers → Developer Mode → On`
  
 ### Run the script
  
-Paste this into **PowerShell 7 as Administrator** — no cloning, no installation needed:
+Paste this into **PowerShell 7 as Administrator** - no cloning, no installation needed:
  
 ```powershell
 irm https://raw.githubusercontent.com/sttteampunk/win11-rice/main/setup.ps1 | iex
@@ -254,7 +253,7 @@ Place `theme.nss` in the Nilesoft installation directory, then apply it with `Ct
  
 ## You're Ready
  
-From here, the setup is yours. Customize configs, swap themes, explore the tools — and enjoy a Windows environment that actually feels like *your* environment.
+From here, the setup is yours. Customize configs, swap themes, explore the tools - and enjoy a Windows environment that actually feels like *your* environment.
  
 ---
 
