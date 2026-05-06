@@ -255,7 +255,8 @@ Place `theme.nss` in the Nilesoft installation directory, then apply it with `Ct
 
 - **Win11 Toggle Rounded Corners** (Disables rounded corners on windows 11) → [GitHub](https://github.com/rich-ayr/win11-toggle-rounded-corners)
 - **Thide** (Hides default windows taskbar) → [GitHub](https://github.com/amnweb/thide)
- 
+- **AltSnap** (Allows to resize and drag windows with alt + mouse like on linux) → [GitHub](https://github.com/RamonUnch/AltSnap)
+
 ---
  
 ## You're Ready
