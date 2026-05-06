@@ -82,13 +82,13 @@ That's it. The script creates `~/Dotfiles` with a subfolder for each installed a
 
 > This phase sets up the terminal environment used throughout the rest of the installation.
 
-#### 1. Nerd Font
+#### 1. Nerd Font 
 
 **Why:** Nearly every tool in this guide - Starship, Yazi and Neovim - depends on Nerd Font icons. Without one set as your terminal's default font, your setup will display broken boxes instead of icons.
 
 **Installation:** Pick any font you like. The dotfiles in this repo use **JetBrains Mono**. Download the `.zip` and install all `.ttf` files from the archive.
 
-→ [Download Nerd Fonts](https://www.nerdfonts.com/font-downloads)
+**Nerd fonts** → [Download](https://www.nerdfonts.com/font-downloads)
 
 ---
 
@@ -248,6 +248,13 @@ For each mod, copy the contents of its `.txt` file into the Advanced Settings fi
 ### Nilesoft Shell
  
 Place `theme.nss` in the Nilesoft installation directory, then apply it with `Ctrl + Right-click`.
+
+---
+
+## Additional stuff
+
+- **Win11 Toggle Rounded Corners** (Disables rounded corners on windows 11) → [GitHub](https://github.com/rich-ayr/win11-toggle-rounded-corners)
+- **Thide** (Hides default windows taskbar) → [GitHub](https://github.com/amnweb/thide)
  
 ---
  
@@ -276,4 +283,3 @@ From here, the setup is yours. Customize configs, swap themes, explore the tools
 - **Vencord** → [GitHub](https://github.com/Vendicated/Vencord)
 - **WindHawk** → [GitHub](https://github.com/ramensoftware/windhawk)
 - **Nilesoft Shell** → [GitHub](https://github.com/moudey/shell)
-
